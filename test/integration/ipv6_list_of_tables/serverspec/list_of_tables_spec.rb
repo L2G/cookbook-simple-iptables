@@ -10,10 +10,10 @@ describe iptables do
   it { should have_rule('-A array_of_rules -p tcp -m tcp --dport 84 -j ACCEPT') }
   it { should have_rule('-A array_of_rules -p tcp -m tcp --dport 85 -j ACCEPT') }
   it { should have_rule('-A INPUT -j array_of_rules') }
-  it { should_not have_rule('*nat') }
-  it { should have_rule('*mangle') }
-  it { should have_rule('*filter') }
-  it { should_not have_rule('*raw') }
+  it { should_not have_rule('-P INPUT ACCEPT').with_table('nat') }
+  it { should have_rule('-P INPUT ACCEPT').with_table('mangle') }
+  it { should have_rule('-P INPUT ACCEPT').with_table('filter') }
+  it { should_not have_rule('-P INPUT ACCEPT').with_table('raw') }
 end
 
 describe ip6tables do
@@ -26,8 +26,8 @@ describe ip6tables do
   it { should have_rule('-A array_of_rules -p tcp -m tcp --dport 84 -j ACCEPT') }
   it { should have_rule('-A array_of_rules -p tcp -m tcp --dport 85 -j ACCEPT') }
   it { should have_rule('-A INPUT -j array_of_rules') }
-  it { should_not have_rule('*nat') }
-  it { should have_rule('*mangle') }
-  it { should have_rule('*filter') }
-  it { should_not have_rule('*raw') }
+  it { should_not have_rule('-P INPUT ACCEPT').with_table('nat') }
+  it { should have_rule('-P INPUT ACCEPT').with_table('mangle') }
+  it { should have_rule('-P INPUT ACCEPT').with_table('filter') }
+  it { should_not have_rule('-P INPUT ACCEPT').with_table('raw') }
 end
